@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pink_dark"
+    android:background="@color/black_mini"
     tools:context=".MainActivity_Fragments.MainActivity"
     >
 
@@ -12,9 +12,9 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btn_nav"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/azure"
-        app:itemTextColor="@color/black"
+        android:layout_height="wrap_content"
+        android:background="@color/unchecked"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +22,13 @@
 
     <FrameLayout
         android:id="@+id/frame_main"
-        android:layout_width="409dp"
-        android:layout_height="680dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nav"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:paddingTop="15dp"
         android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

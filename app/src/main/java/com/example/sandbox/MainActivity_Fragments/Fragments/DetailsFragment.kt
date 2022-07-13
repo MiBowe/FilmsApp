@@ -27,7 +27,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.posterTool.setImageResource(film.poster)
+        binding.posterTool.setImageResource(film.tool_poster)
         binding.toolbar.title = film.title
         binding.titleDetail.text = getText(film.details)
 

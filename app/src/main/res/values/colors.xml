@@ -6,11 +6,16 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_mini">#E21F1E1E</color>
+    <color name="black_50">#80000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#B5B2B2</color>
     <color name="invis">#00FFFFFF</color>
     <color name="red">#FF0202</color>
     <color name="orange">#F86300</color>
-    <color name="unchecked">#5E000000</color>
+    <color name="orange_50">#A3F86300</color>
+    <color name="unchecked">#31000000</color>
+    <color name="card_back">#ED000000</color>
     <color name="azure">#A41DAEA0</color>
     <color name="azure_dark">#D716A6E9</color>
     <color name="pink_dark">#DDBF82E4</color>
