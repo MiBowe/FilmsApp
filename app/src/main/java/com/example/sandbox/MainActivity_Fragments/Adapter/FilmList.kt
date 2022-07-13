@@ -1,5 +1,4 @@
 package com.example.sandbox.MainActivity_Fragments.Adapter
-import com.example.sandbox.MainActivity_Fragments.Adapter.FilmItem
 import com.example.sandbox.R
 class FilmList {
     companion object{

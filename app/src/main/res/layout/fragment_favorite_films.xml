@@ -23,11 +23,4 @@
         tools:itemCount="7"
         tools:listitem="@layout/card_layout" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:textSize="26sp"
-        android:textColor="@color/black"
-        android:layout_width="389dp"
-        android:layout_height="98dp"
-        android:text="FAVORITE FRAG" />
 </FrameLayout>
