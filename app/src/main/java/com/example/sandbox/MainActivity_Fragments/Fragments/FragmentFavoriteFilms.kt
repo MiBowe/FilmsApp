@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.Toast
-import com.example.sandbox.MainActivity_Fragments.Adapter.Adapter
-import com.example.sandbox.MainActivity_Fragments.Adapter.FilmItem
-import com.example.sandbox.MainActivity_Fragments.Adapter.FilmList
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmList
 import com.example.sandbox.R
 import com.example.sandbox.databinding.FragmentFavoriteFilmsBinding
 import com.google.android.material.snackbar.Snackbar

@@ -1,4 +1,4 @@
-package com.example.sandbox.MainActivity_Fragments.Adapter
+package com.example.sandbox.MainActivity_Fragments.presentation.Adapter
 
 import android.util.Log
 import android.view.LayoutInflater
