@@ -1,4 +1,4 @@
-package com.example.sandbox.MainActivity_Fragments.Fragments
+package com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
-import com.example.sandbox.MainActivity_Fragments.Adapter.Adapter
-import com.example.sandbox.MainActivity_Fragments.Adapter.FilmItem
-import com.example.sandbox.MainActivity_Fragments.Adapter.FilmList
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmList
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.detailsFilm.DetailsFragment
 import com.example.sandbox.R
 import com.example.sandbox.databinding.FragmentFilmListBinding
 import com.google.android.material.snackbar.Snackbar
 
-class FragmentFilmList : Fragment(), Adapter.Listener {
+class FragmentFilmList : Fragment(), Adapter.Listener{
 
     private var adapter : Adapter? = null
     private var _binding : FragmentFilmListBinding? = null
@@ -31,7 +32,7 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
+        init()
     }
 
     override fun onDestroy() {
@@ -39,10 +40,11 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
         _binding = null
     }
 
-    private fun initRecycler() {
-       val filmList = FilmList.filmlist as MutableList<FilmItem>
-        adapter = Adapter(filmList, this)
+    private fun init(){
+
+
         binding?.rvFilms?.adapter = adapter
+
      }
 
     override fun onClickFavorite(checkBox: CheckBox, item: FilmItem, position: Int) {

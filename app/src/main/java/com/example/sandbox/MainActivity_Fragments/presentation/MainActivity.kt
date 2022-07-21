@@ -1,19 +1,22 @@
-package com.example.sandbox.MainActivity_Fragments
+package com.example.sandbox.MainActivity_Fragments.presentation
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.sandbox.MainActivity_Fragments.Adapter.Adapter
-import com.example.sandbox.MainActivity_Fragments.Fragments.FragmentFavoriteFilms
-import com.example.sandbox.MainActivity_Fragments.Fragments.FragmentFilmList
+import androidx.lifecycle.ViewModelProvider
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList.FilmListViewModel
+import com.example.sandbox.MainActivity_Fragments.presentation.adapter.Adapter
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.favoriteFilms.FragmentFavoriteFilms
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList.FragmentFilmList
 import com.example.sandbox.R
 import com.example.sandbox.databinding.ActivityMainBinding
 import com.example.sandbox.databinding.AlertDialogExitBinding
 
 class MainActivity : AppCompatActivity(), Adapter.Listener {
     lateinit var binding: ActivityMainBinding
+    private lateinit var VM: FilmListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity(), Adapter.Listener {
                         .replace(R.id.frame_main, FragmentFavoriteFilms())
                         .commit()
                 }
+
                 R.id.button1_menu ->{
                     supportFragmentManager
                         .beginTransaction()
