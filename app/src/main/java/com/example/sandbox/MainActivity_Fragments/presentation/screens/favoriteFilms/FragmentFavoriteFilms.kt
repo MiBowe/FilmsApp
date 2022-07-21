@@ -1,4 +1,4 @@
-package com.example.sandbox.MainActivity_Fragments.Fragments
+package com.example.sandbox.MainActivity_Fragments.presentation.screens.favoriteFilms
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmList
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.detailsFilm.DetailsFragment
 import com.example.sandbox.R
 import com.example.sandbox.databinding.FragmentFavoriteFilmsBinding
 import com.google.android.material.snackbar.Snackbar
