@@ -1,19 +1,59 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
-import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmList
+import com.example.sandbox.MainActivity_Fragments.Domain.api.App
 
-class FilmListViewModel: ViewModel(){
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmListResponse
 
-    private val _films = MutableLiveData<MutableList<FilmList>>()
-    var films: LiveData<MutableList<FilmList>> = _films
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-    fun getFilms(){
+open class FilmListViewModel: ViewModel() {
+    val filmList: LiveData<MutableList<FilmItem>>
 
-        films = _films
+    init {
+        Log.d("FilmsVXM", this.toString())
 
+        filmList = MutableLiveData<MutableList<FilmItem>>()
+        filmList.value = mutableListOf<FilmItem>()
+
+        getFilmList()
     }
+
+    private fun getFilmList(page: Int = 1) {
+        App.instance.api.getFilms(page)
+            .enqueue(object : Callback<FilmListResponse> {
+                override fun onFailure(call: Call<FilmListResponse>, t: Throwable) {
+                }
+
+                override fun onResponse(
+                    call: Call<FilmListResponse>,
+                    response: Response<FilmListResponse>
+                )   {
+                        filmList.value?.clear()
+                        if (response.isSuccessful) {
+                            response.body()?.items
+                                ?.forEach {
+                                    filmList.value?.add(
+                                        FilmItem(
+                                            it.posterUrlPreview,
+                                            it.kinopoiskId,
+                                            it.nameEn,
+                                            it.nameRu
+                                        )
+                                    )
+                                }
+                        }
+                    }
+            })
+    }
+
+
 
 }

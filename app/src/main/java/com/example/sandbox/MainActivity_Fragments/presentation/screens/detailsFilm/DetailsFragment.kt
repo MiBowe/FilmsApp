@@ -20,27 +20,13 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailsBinding.inflate(inflater)
-        film = arguments?.getSerializable("film") as FilmItem
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.posterTool.setImageResource(film.tool_poster)
-        binding.toolbar.title = film.title
-        binding.titleDetail.text = getText(film.details)
 
     }
 
-    companion object{
-
-        fun NewInstance(item: FilmItem): Fragment{
-            val arguments = Bundle()
-            arguments.putSerializable("film", item)
-            val frag = DetailsFragment()
-            frag.arguments = arguments
-            return frag
-        }
-    }
 }
