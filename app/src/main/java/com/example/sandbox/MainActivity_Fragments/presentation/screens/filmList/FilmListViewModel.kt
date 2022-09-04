@@ -4,6 +4,7 @@ package com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList
 import android.os.Bundle
 import android.util.Log
 import android.widget.CheckBox
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sandbox.MainActivity_Fragments.App
@@ -53,7 +54,5 @@ open class FilmListViewModel(): ViewModel(), Adapter.Listener {
         }
 
     override fun onClick(filmItem: FilmItem) {
-        val bundle = Bundle()
-        bundle.putInt("film", filmItem.id)
     }
     }

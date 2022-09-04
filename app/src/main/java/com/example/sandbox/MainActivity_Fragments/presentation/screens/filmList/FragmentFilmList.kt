@@ -69,11 +69,12 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
         }
 
     override fun onClick(filmItem: FilmItem) {
-        viewModel.onClick(filmItem)
+        val bundle = Bundle()
+        bundle.putSerializable("film", filmItem.id)
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_main, DetailsFragment())
-            .addToBackStack(null)
+            .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem), "details_fragment")
+            .addToBackStack("pop_stack")
             .commit()
     }
 

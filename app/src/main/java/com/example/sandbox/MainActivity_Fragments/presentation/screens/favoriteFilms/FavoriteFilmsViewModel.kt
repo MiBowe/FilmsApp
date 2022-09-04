@@ -1,6 +1,7 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.screens.favoriteFilms
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +12,8 @@ import kotlinx.coroutines.launch
 
 open class FavoriteFilmsViewModel: ViewModel(), Adapter.Listener {
 
-    var favoriteFilms = MutableLiveData<List<FilmItem>>()
+    val _favoriteFilms = MutableLiveData<List<FilmItem>>()
+    val favoriteFilms: LiveData<List<FilmItem>> = _favoriteFilms
 
     init {
 
@@ -26,8 +28,8 @@ open class FavoriteFilmsViewModel: ViewModel(), Adapter.Listener {
             Log.d("films_db_fav", "getFavoriteList: ${newList} ")
 
             try {
-                favoriteFilms.postValue(newList)
-                Log.d("PostValue", "getFavoriteList: ${favoriteFilms.postValue(newList)}")
+                _favoriteFilms.postValue(newList)
+                Log.d("PostValue", "getFavoriteList: ${_favoriteFilms.postValue(newList)}")
             }
             catch (e: Exception){
                 Log.d("FAILURE", "${e.message}")

@@ -25,7 +25,7 @@ interface Dao {
     fun getAll(): List<FilmItem?>
 
     @Query("SELECT * FROM Films WHERE id = :id")
-    fun getFilmByID(id: Long): FilmItem?
+    fun getFilmByID(id: Int): FilmItem
 
 
 }

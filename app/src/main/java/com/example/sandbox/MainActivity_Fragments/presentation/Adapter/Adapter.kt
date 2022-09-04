@@ -1,6 +1,5 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.Adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +44,9 @@ class Adapter (private val films: List<FilmItem>, private val listener: Listener
                 .centerCrop()
                 .into(poster)
 
+            itemView.setOnClickListener{
+                listener.onClick(item)
+            }
             listener.onClickFavorite(favoriteClick, item, position)
         }
 

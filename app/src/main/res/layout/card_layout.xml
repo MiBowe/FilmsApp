@@ -14,15 +14,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="155dp"
         android:background="@color/card_back"
         android:padding="3dp">
 
 
         <ImageView
             android:id="@+id/card_poster"
-            android:layout_width="71dp"
-            android:layout_height="100dp"
+            android:layout_width="108dp"
+            android:layout_height="148dp"
+            android:layout_marginStart="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +39,7 @@
             android:text="@string/avatar"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="26sp"
+            android:textSize="22sp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/card_poster"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,8 +55,8 @@
 
         <CheckBox
             android:id="@+id/favorite_click"
-            android:layout_width="113dp"
-            android:layout_height="94dp"
+            android:layout_width="89dp"
+            android:layout_height="91dp"
             android:layout_marginEnd="6dp"
             android:button="@drawable/item_selector"
             android:gravity="center"

@@ -28,6 +28,7 @@ object FilmsRepositoryImpl: FilmsRepository {
                             ?.map {
                                 FilmItem(
                                     it.posterUrlPreview,
+                                    it.posterUrl,
                                     it.kinopoiskId,
                                     it.nameRu,
                                     it.description
@@ -48,6 +49,7 @@ object FilmsRepositoryImpl: FilmsRepository {
                 result.map {
                     FilmItem(
                         it?.poster,
+                        it!!.big_poster,
                         it!!.id,
                         it.title,
                         it.subtitle,
