@@ -1,7 +1,6 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.Adapter
 
-import android.content.ClipData
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sandbox.R
-import com.example.sandbox.databinding.CardLayoutBinding
 
 class Adapter (private val films: List<FilmItem>, private val listener: Listener) : RecyclerView.Adapter<Adapter.FilmsViewHolder>() {
 
@@ -23,7 +21,7 @@ class Adapter (private val films: List<FilmItem>, private val listener: Listener
 
     override fun onBindViewHolder(holder: FilmsViewHolder, position: Int) {
 
-        holder.bind(films[position])
+        holder.bind(films[position],listener,position)
     }
 
     override fun getItemCount(): Int = films.size
@@ -33,9 +31,10 @@ class Adapter (private val films: List<FilmItem>, private val listener: Listener
         private val poster: ImageView = view.findViewById(R.id.card_poster)
         private val title: TextView = view.findViewById(R.id.card_title)
         private val subtitle: TextView = view.findViewById(R.id.card_subtitle)
+        private val favoriteClick: CheckBox = view.findViewById(R.id.favorite_click)
 
 
-        fun bind(item: FilmItem){
+        fun bind(item: FilmItem, listener: Listener,position: Int){
             title.text = item.title
             subtitle.text = item.subtitle
 
@@ -46,6 +45,7 @@ class Adapter (private val films: List<FilmItem>, private val listener: Listener
                 .centerCrop()
                 .into(poster)
 
+            listener.onClickFavorite(favoriteClick, item, position)
         }
 
     }
@@ -56,7 +56,6 @@ interface Listener {
 
     fun onClickFavorite(checkBox: CheckBox, item: FilmItem, position: Int) {
     }
-
 }
 }
 

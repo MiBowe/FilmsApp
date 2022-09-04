@@ -1,59 +1,59 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList
 
+
+import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.LiveData
+import android.widget.CheckBox
 import androidx.lifecycle.MutableLiveData
-
 import androidx.lifecycle.ViewModel
-import com.example.sandbox.MainActivity_Fragments.Domain.api.App
-
+import com.example.sandbox.MainActivity_Fragments.App
+import com.example.sandbox.MainActivity_Fragments.data.repository.films.FilmsRepositoryImpl
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
-import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmListResponse
+import java.util.concurrent.Executors
 
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
-open class FilmListViewModel: ViewModel() {
-    val filmList: LiveData<MutableList<FilmItem>>
+open class FilmListViewModel(): ViewModel(), Adapter.Listener {
+    val filmList = MutableLiveData<List<FilmItem>>()
 
     init {
         Log.d("FilmsVXM", this.toString())
-
-        filmList = MutableLiveData<MutableList<FilmItem>>()
-        filmList.value = mutableListOf<FilmItem>()
-
         getFilmList()
+
     }
 
-    private fun getFilmList(page: Int = 1) {
-        App.instance.api.getFilms(page)
-            .enqueue(object : Callback<FilmListResponse> {
-                override fun onFailure(call: Call<FilmListResponse>, t: Throwable) {
-                }
-
-                override fun onResponse(
-                    call: Call<FilmListResponse>,
-                    response: Response<FilmListResponse>
-                )   {
-                        filmList.value?.clear()
-                        if (response.isSuccessful) {
-                            response.body()?.items
-                                ?.forEach {
-                                    filmList.value?.add(
-                                        FilmItem(
-                                            it.posterUrlPreview,
-                                            it.kinopoiskId,
-                                            it.nameEn,
-                                            it.nameRu
-                                        )
-                                    )
-                                }
-                        }
+    private fun getFilmList() {
+            FilmsRepositoryImpl.getFilmsFromRoom{films ->
+                films.let {
+                    if (films.isNotEmpty()){
+                        filmList.postValue(films)
+                        Log.d("FILMS","Films from DB")
+                        Log.d("FILMS_DB","$films")
+                        Log.d("FILMS_DB","${filmList.postValue(films)}")
                     }
-            })
+                    else {
+                        FilmsRepositoryImpl.getFilms { films -> filmList.postValue(films) }
+                        Log.d("FILMS","Films from retrofit")
+                        Log.d("FILMS_retro","$films")
+                        Log.d("FILMS_retro","${filmList.postValue(films)}")
+                    }
+                }
+            }
     }
 
 
+    override fun onClickFavorite(checkBox: CheckBox, item: FilmItem, position: Int) {
+        item.isFavorite = checkBox.isChecked
+        Executors.newSingleThreadExecutor().execute(Runnable {
+            App.instance.appDB?.let{
+                it.getFilmDao().updateFilm(item)
+            }
+            Log.d("test favorite", "onClickFavorite: клацнули")
+        })
 
-}
+        }
+
+    override fun onClick(filmItem: FilmItem) {
+        val bundle = Bundle()
+        bundle.putInt("film", filmItem.id)
+    }
+    }

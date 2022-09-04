@@ -3,15 +3,17 @@ package com.example.sandbox.MainActivity_Fragments.presentation
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-//import com.example.sandbox.MainActivity_Fragments.presentation.screens.favoriteFilms.FragmentFavoriteFilms
-import com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList.FilmListViewModel
+import com.example.sandbox.MainActivity_Fragments.App
+import com.example.sandbox.MainActivity_Fragments.data.room.AppDatabase
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.favoriteFilms.FragmentFavoriteFilms
 import com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList.FragmentFilmList
 import com.example.sandbox.R
 import com.example.sandbox.databinding.ActivityMainBinding
 import com.example.sandbox.databinding.AlertDialogExitBinding
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(){
     lateinit var binding: ActivityMainBinding
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity(){
                 R.id.button2_menu ->{
                     supportFragmentManager
                         .beginTransaction()
-                        //.replace(R.id.frame_main, FragmentFavoriteFilms())
+                        .replace(R.id.frame_main, FragmentFavoriteFilms())
                         .commit()
                 }
 

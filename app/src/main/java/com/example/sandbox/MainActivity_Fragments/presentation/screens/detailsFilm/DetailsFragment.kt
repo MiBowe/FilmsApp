@@ -13,7 +13,7 @@ import com.example.sandbox.databinding.FragmentDetailsBinding
 class DetailsFragment : Fragment() {
 
     lateinit var binding : FragmentDetailsBinding
-    lateinit var film : FilmItem
+    var filmID = arguments?.getBundle("film")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,6 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
     }
 

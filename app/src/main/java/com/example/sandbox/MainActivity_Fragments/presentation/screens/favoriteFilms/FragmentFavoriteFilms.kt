@@ -6,13 +6,87 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
-import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmListResponse
-import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.KinopoiskFilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
 import com.example.sandbox.databinding.FragmentFavoriteFilmsBinding
-import com.google.android.material.snackbar.Snackbar
+import java.util.concurrent.Executors
+
+
+class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
+
+    private val fav_films_VM: FavoriteFilmsViewModel by viewModels()
+    var fav_films = mutableListOf<FilmItem>()
+    private var _binding: FragmentFavoriteFilmsBinding? = null
+    lateinit var adapter: Adapter
+    protected val binding get() = _binding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentFavoriteFilmsBinding.inflate(inflater)
+        return _binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecycler()
+        val filmsObserve = Observer<List<FilmItem>>{
+            fav_films.clear()
+            fav_films.addAll(it)
+            adapter.notifyDataSetChanged()
+            Log.d("FragmentFF","$fav_films")
+        }
+        fav_films_VM.favoriteFilms.observe(viewLifecycleOwner, filmsObserve)
+
+    }
+
+    private fun initRecycler() {
+            adapter = Adapter(fav_films, this)
+            binding?.rvFavFilms?.adapter = adapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
 
