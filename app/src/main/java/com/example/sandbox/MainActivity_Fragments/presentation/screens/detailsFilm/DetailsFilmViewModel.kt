@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sandbox.MainActivity_Fragments.App
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import java.util.concurrent.Executors
 
 
 class DetailsFilmViewModel: ViewModel() {
@@ -16,8 +17,10 @@ class DetailsFilmViewModel: ViewModel() {
 
 
     fun getFilmByID(filmId: Int){
+        Executors.newSingleThreadExecutor().execute(Runnable {
             var film = App.instance.appDB!!.getFilmDao().getFilmByID(filmId)
-        _filmDetails.postValue(film)
+            _filmDetails.postValue(film)
+            })
     }
 
 

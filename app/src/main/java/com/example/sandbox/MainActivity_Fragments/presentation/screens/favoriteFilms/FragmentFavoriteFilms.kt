@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import com.example.sandbox.MainActivity_Fragments.App
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.screens.detailsFilm.DetailsFragment
+import com.example.sandbox.R
 import com.example.sandbox.databinding.FragmentFavoriteFilmsBinding
 import java.util.concurrent.Executors
 
@@ -56,6 +58,16 @@ class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
             })
             adapter.deleteItem(item)
         }
+    }
+
+    override fun onClick(filmItem: FilmItem) {
+        val bundle = Bundle()
+        bundle.putInt("film", filmItem.id)
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem), "details_fragment")
+            .addToBackStack("pop_stack")
+            .commit()
     }
 
     private fun initRecycler() {

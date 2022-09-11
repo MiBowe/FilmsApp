@@ -18,7 +18,7 @@ import kotlin.math.log
 class DetailsFragment : Fragment() {
 
     lateinit var binding : FragmentDetailsBinding
-    val filmID = arguments?.getInt("film")
+    var filmId : Int = 0
     private val view_model: DetailsFilmViewModel by viewModels()
 
 
@@ -26,14 +26,15 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        filmId = arguments?.getInt("film")!!
         binding = FragmentDetailsBinding.inflate(inflater)
-        Log.d("BUNDLE___________________________________________________________>", "$filmID")
+        Log.d("BUNDLE___________________________________________________________>", "$filmId")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       /* getFilm()
+        getFilm()
         view_model.filmDetails.observe(viewLifecycleOwner, Observer<FilmItem>{
             binding.titleDetail.text = it.title
             Glide.with(binding.posterTool)
@@ -41,13 +42,11 @@ class DetailsFragment : Fragment() {
                 .override(300,300)
                 .centerCrop()
                 .into(binding.posterTool)
-        })*/
+        })
         }
 
     private fun getFilm() {
-        if (filmID != null) {
-            view_model.getFilmByID(filmID)
-        }
+        view_model.getFilmByID(filmId)
     }
 
     companion object{
