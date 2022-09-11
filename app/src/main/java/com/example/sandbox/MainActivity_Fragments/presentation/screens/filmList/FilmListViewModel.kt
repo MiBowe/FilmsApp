@@ -55,4 +55,4 @@ open class FilmListViewModel(): ViewModel(), Adapter.Listener {
 
     override fun onClick(filmItem: FilmItem) {
     }
-    }
+}

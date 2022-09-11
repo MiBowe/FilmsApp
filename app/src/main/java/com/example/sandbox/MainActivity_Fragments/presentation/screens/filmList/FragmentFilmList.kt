@@ -70,7 +70,7 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
 
     override fun onClick(filmItem: FilmItem) {
         val bundle = Bundle()
-        bundle.putSerializable("film", filmItem.id)
+        bundle.putInt("film", filmItem.id)
         parentFragmentManager
             .beginTransaction()
             .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem), "details_fragment")

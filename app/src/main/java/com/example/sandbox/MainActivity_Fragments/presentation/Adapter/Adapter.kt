@@ -10,7 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sandbox.R
 
-class Adapter (private val films: List<FilmItem>, private val listener: Listener) : RecyclerView.Adapter<Adapter.FilmsViewHolder>() {
+class Adapter (private val films: MutableList<FilmItem>, private val listener: Listener) : RecyclerView.Adapter<Adapter.FilmsViewHolder>() {
+
+    fun deleteItem(newFilm: FilmItem){
+        var position = films.indexOf(newFilm)
+        films.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsViewHolder =

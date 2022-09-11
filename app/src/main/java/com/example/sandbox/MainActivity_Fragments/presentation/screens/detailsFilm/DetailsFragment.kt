@@ -18,7 +18,7 @@ import kotlin.math.log
 class DetailsFragment : Fragment() {
 
     lateinit var binding : FragmentDetailsBinding
-    val filmID = arguments?.getSerializable("film") as Int
+    val filmID = arguments?.getInt("film")
     private val view_model: DetailsFilmViewModel by viewModels()
 
 
@@ -45,14 +45,16 @@ class DetailsFragment : Fragment() {
         }
 
     private fun getFilm() {
-        view_model.getFilmByID(filmID)
+        if (filmID != null) {
+            view_model.getFilmByID(filmID)
+        }
     }
 
     companion object{
 
         fun NewInstance(item: FilmItem): Fragment{
             val arguments = Bundle()
-            arguments.putSerializable("film", item.id)
+            arguments.putInt("film", item.id)
             val frag = DetailsFragment()
             frag.arguments = arguments
             return frag

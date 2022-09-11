@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.sandbox.MainActivity_Fragments.App
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
 import com.example.sandbox.databinding.FragmentFavoriteFilmsBinding
@@ -41,7 +43,19 @@ class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
             Log.d("FragmentFF","$fav_films")
         }
         fav_films_VM.favoriteFilms.observe(viewLifecycleOwner, filmsObserve)
+    }
 
+    override fun onClickFavorite(checkBox: CheckBox, item: FilmItem, position: Int) {
+        checkBox.isChecked = item.isFavorite
+        checkBox.setOnClickListener {
+            item.isFavorite = checkBox.isChecked
+            Executors.newSingleThreadExecutor().execute(Runnable {
+                App.instance.appDB?.let{
+                    it.getFilmDao().updateFilm(item)
+                }
+            })
+            adapter.deleteItem(item)
+        }
     }
 
     private fun initRecycler() {
