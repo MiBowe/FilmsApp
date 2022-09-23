@@ -8,12 +8,14 @@ import com.example.sandbox.MainActivity_Fragments.data.room.AppDB
 import com.example.sandbox.MainActivity_Fragments.data.room.AppDatabase
 import com.example.sandbox.MainActivity_Fragments.data.room.CreateDataBaseCallback
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val DATABASE_NAME = "DataBaseName"
 
 class App: Application() {
+
     lateinit var api: Api
     var appDB: AppDB? = null
 
@@ -27,10 +29,10 @@ class App: Application() {
         initAppDB()
         }
 
-
     private fun initretrofit() {
 
         val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor { chain ->
                 val url = chain
                     .request()
@@ -41,7 +43,7 @@ class App: Application() {
                     chain.request()
                         .newBuilder()
                         .url(url)
-                        .addHeader("X-API-KEY", "4b68627e-c490-43f4-8860-b666b0a74084")
+                        .addHeader("X-API-KEY", "351310e8-30bd-42bc-ab70-4a8037b97d76")
                         .addHeader("Content-Type", "application/json")
                         .build()
                 )
@@ -56,7 +58,6 @@ class App: Application() {
             .build()
 
         api = retrofit.create(Api::class.java)
-
     }
 
     companion object {

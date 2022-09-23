@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.KinopoiskFilmItem
 import com.example.sandbox.databinding.FragmentDetailsBinding
 import java.util.*
 import kotlin.math.log
@@ -35,15 +36,15 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getFilm()
-        view_model.filmDetails.observe(viewLifecycleOwner, Observer<FilmItem>{
-            binding.titleDetail.text = it.title
+        view_model.filmDetails.observe(viewLifecycleOwner, Observer<FilmItem?>{
+            binding.titleDetail.text = it.subtitle
+            binding.toolbar.title = it.title
             Glide.with(binding.posterTool)
-                .load(it.big_poster)
-                .override(300,300)
+                .load(it.posterToolbar)
                 .centerCrop()
                 .into(binding.posterTool)
         })
-        }
+    }
 
     private fun getFilm() {
         view_model.getFilmByID(filmId)

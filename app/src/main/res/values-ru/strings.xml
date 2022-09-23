@@ -21,6 +21,7 @@
     <string name="negative_answer">Нет</string>
     <string name="negative_answer_lng">Английский</string>
     <string name="films_menu">Фильмы</string>
+    <string name="retry">Повторить запрос</string>
     <string name="fav_menu">Избраное</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

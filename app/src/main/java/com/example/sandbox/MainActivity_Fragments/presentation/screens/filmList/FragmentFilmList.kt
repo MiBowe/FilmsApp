@@ -1,28 +1,32 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.screens.filmList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.example.sandbox.MainActivity_Fragments.App
-import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sandbox.MainActivity_Fragments.Injection
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.LDAdarpter
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.LoadStateAdapter
 import com.example.sandbox.MainActivity_Fragments.presentation.screens.detailsFilm.DetailsFragment
 import com.example.sandbox.R
 import com.example.sandbox.databinding.FragmentFilmListBinding
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.launch
 
-class FragmentFilmList : Fragment(), Adapter.Listener {
+class FragmentFilmList : Fragment(), LDAdarpter.Listener {
 
-    private val viewModel: FilmListViewModel by viewModels()
+    private val viewModel: FilmListViewModel by viewModels<FilmListViewModel>(
+        factoryProducer = {Injection.provideViewModelFactory(owner = this)}
+    )
     private var _binding: FragmentFilmListBinding? = null
-    lateinit var adapter: Adapter
     protected val binding get() = _binding
     val newFilmList = mutableListOf<FilmItem>()
 
@@ -32,7 +36,6 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
         savedInstanceState: Bundle?
     ): View? {
 
-
         _binding = FragmentFilmListBinding.inflate(inflater)
         return _binding?.root
 
@@ -40,21 +43,16 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
-        val filmsObserve = Observer<List<FilmItem>> {
-            newFilmList.clear()
-            newFilmList.addAll(it)
-            adapter.notifyDataSetChanged()
-            Log.d("FRFL", "$newFilmList: ")
-        }
-        viewModel.filmList.observe(viewLifecycleOwner, filmsObserve)
-
-        val task = Runnable {
-            App.instance.appDB?.let {
-                it.getFilmDao().insertList(newFilmList)
+        val films = viewModel.films
+        val filmsAdapter = LDAdarpter(this)
+        binding?.bindAdapter(filmsAdapter = filmsAdapter)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                films.collect{
+                    filmsAdapter.submitData(it)
+                }
             }
         }
-        Executors.newSingleThreadScheduledExecutor().schedule(task,2000,TimeUnit.MILLISECONDS)
     }
         override fun onClickFavorite(
             checkBox: CheckBox,
@@ -62,10 +60,7 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
             position: Int,
         ) {
             checkBox.isChecked = item.isFavorite
-            checkBox.setOnClickListener() {
-                viewModel.onClickFavorite(checkBox, item, position)
-            }
-
+            viewModel.onClickFavorite(checkBox,item,position)
         }
 
     override fun onClick(filmItem: FilmItem) {
@@ -78,16 +73,19 @@ class FragmentFilmList : Fragment(), Adapter.Listener {
             .commit()
     }
 
-        private fun initRecycler() {
-            adapter = Adapter(newFilmList, this)
-            binding?.rvFilms?.adapter = adapter
-        }
+    private fun FragmentFilmListBinding.bindAdapter(filmsAdapter: LDAdarpter) {
+        rvFilms.adapter = filmsAdapter.withLoadStateFooter(
+            footer = LoadStateAdapter { filmsAdapter.retry() }
+        )
+        rvFilms.layoutManager = LinearLayoutManager(rvFilms.context)
+        val decoration = DividerItemDecoration(rvFilms.context, DividerItemDecoration.VERTICAL)
+        rvFilms.addItemDecoration(decoration)
 
-
+    }
         override fun onDestroy() {
             super.onDestroy()
             _binding = null
         }
-    }
+}
 
 

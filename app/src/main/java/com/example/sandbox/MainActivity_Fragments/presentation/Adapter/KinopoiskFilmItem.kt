@@ -16,7 +16,7 @@ data class KinopoiskFilmItem(
     val logoUrl: String,
     val nameEn: String,
     val nameOriginal: String,
-    val nameRu: String,
+    var nameRu: String?,
     val posterUrl: String,
     val posterUrlPreview: String,
     val productionStatus: String,

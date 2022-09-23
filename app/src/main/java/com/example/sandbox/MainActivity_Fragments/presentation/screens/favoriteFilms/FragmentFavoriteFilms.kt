@@ -9,13 +9,11 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.sandbox.MainActivity_Fragments.App
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
 import com.example.sandbox.MainActivity_Fragments.presentation.screens.detailsFilm.DetailsFragment
 import com.example.sandbox.R
 import com.example.sandbox.databinding.FragmentFavoriteFilmsBinding
-import java.util.concurrent.Executors
 
 
 class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
@@ -50,12 +48,7 @@ class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
     override fun onClickFavorite(checkBox: CheckBox, item: FilmItem, position: Int) {
         checkBox.isChecked = item.isFavorite
         checkBox.setOnClickListener {
-            item.isFavorite = checkBox.isChecked
-            Executors.newSingleThreadExecutor().execute(Runnable {
-                App.instance.appDB?.let{
-                    it.getFilmDao().updateFilm(item)
-                }
-            })
+            fav_films_VM.onClickFavorite(checkBox,item,position)
             adapter.deleteItem(item)
         }
     }

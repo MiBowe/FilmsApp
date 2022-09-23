@@ -1,16 +1,17 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.screens.favoriteFilms
 
 import android.util.Log
+import android.widget.CheckBox
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.sandbox.MainActivity_Fragments.App
 import com.example.sandbox.MainActivity_Fragments.data.repository.films.FilmsRepositoryImpl
-import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.Adapter
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
-import kotlinx.coroutines.launch
+import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.LDAdarpter
+import java.util.concurrent.Executors
 
-open class FavoriteFilmsViewModel: ViewModel(), Adapter.Listener {
+open class FavoriteFilmsViewModel: ViewModel(), LDAdarpter.Listener {
 
     val _favoriteFilms = MutableLiveData<List<FilmItem>>()
     val favoriteFilms: LiveData<List<FilmItem>> = _favoriteFilms
@@ -23,8 +24,8 @@ open class FavoriteFilmsViewModel: ViewModel(), Adapter.Listener {
     }
 
     private fun getFavoriteList() {
-        FilmsRepositoryImpl.getFilmsFromRoom { films ->
-            var newList = films.filter { it.isFavorite  }
+        FilmsRepositoryImpl.getFavoriteFilms{ films ->
+            var newList = films.filter { it.isFavorite }
             Log.d("films_db_fav", "getFavoriteList: ${newList} ")
 
             try {
@@ -37,4 +38,12 @@ open class FavoriteFilmsViewModel: ViewModel(), Adapter.Listener {
         }
     }
 
+    override fun onClickFavorite(checkBox: CheckBox, item: FilmItem, position: Int) {
+        item.isFavorite = checkBox.isChecked
+        Executors.newSingleThreadExecutor().execute(Runnable {
+            App.instance.appDB?.let{
+                it.getFilmDao().updateFilm(item)
+            }
+        })
+    }
 }
