@@ -60,6 +60,7 @@ class LDAdarpter(private val listener: LDAdarpter.Listener): PagingDataAdapter<F
         }
     }
     interface Listener {
+
         fun onClick(filmItem: FilmItem) {
         }
 

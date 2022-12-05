@@ -35,10 +35,8 @@ class FragmentFilmList : Fragment(), LDAdarpter.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentFilmListBinding.inflate(inflater)
         return _binding?.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,7 +66,7 @@ class FragmentFilmList : Fragment(), LDAdarpter.Listener {
         bundle.putInt("film", filmItem.id)
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem), "details_fragment")
+            .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem.id), "details_fragment")
             .addToBackStack("pop_stack")
             .commit()
     }
@@ -80,7 +78,6 @@ class FragmentFilmList : Fragment(), LDAdarpter.Listener {
         rvFilms.layoutManager = LinearLayoutManager(rvFilms.context)
         val decoration = DividerItemDecoration(rvFilms.context, DividerItemDecoration.VERTICAL)
         rvFilms.addItemDecoration(decoration)
-
     }
         override fun onDestroy() {
             super.onDestroy()

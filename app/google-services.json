@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "919738288473",
+    "project_id": "films-otus-mibo",
+    "storage_bucket": "films-otus-mibo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919738288473:android:5d3ddd6476e3b53deae448",
+        "android_client_info": {
+          "package_name": "com.example.sandbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919738288473-ospkau14fvkdojornuqth2uvfbc7tr3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc2FlFiZWPfI7nkt8sl9h3zuKJhJOBKKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919738288473-ospkau14fvkdojornuqth2uvfbc7tr3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

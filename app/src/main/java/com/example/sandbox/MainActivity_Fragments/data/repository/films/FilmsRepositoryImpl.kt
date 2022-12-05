@@ -2,6 +2,9 @@ package com.example.sandbox.MainActivity_Fragments.data.repository.films
 
 import android.util.Log
 import com.example.sandbox.MainActivity_Fragments.App
+import com.example.sandbox.MainActivity_Fragments.data.api.PostRequest.Data
+import com.example.sandbox.MainActivity_Fragments.data.api.PostRequest.Notif
+import com.example.sandbox.MainActivity_Fragments.data.api.PostRequest.RetrofitPostRequestModel
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmItem
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmListResponse
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.KinopoiskFilmItem
@@ -16,7 +19,7 @@ object FilmsRepositoryImpl: FilmsRepository {
 
     override fun getFilms(page: Int, successResult: (films: List<FilmItem>) -> Unit) {
 
-        App.instance.api.getFilms(page)
+        App.instance.api_films.getFilms(page)
             .enqueue(object : Callback<FilmListResponse> {
                 override fun onFailure(call: Call<FilmListResponse>, t: Throwable) {
                     Log.d("OOPS! ------------------------------------------------->", "Api request is not success")
@@ -75,7 +78,7 @@ object FilmsRepositoryImpl: FilmsRepository {
     }
 
     override fun getMovieDetails(id: Int, successResult: (film :FilmItem?) -> Unit) {
-        val result = App.instance.api.getMovieDetails(id)
+        val result = App.instance.api_films.getMovieDetails(id)
             .enqueue(object : Callback<KinopoiskFilmItem> {
                 override fun onFailure(call: Call<KinopoiskFilmItem>, t: Throwable) {
                     Log.d("OOPS! ------------------------------------------------->", "Api request is not success")
@@ -128,5 +131,32 @@ object FilmsRepositoryImpl: FilmsRepository {
             }
         }
         Executors.newSingleThreadExecutor().submit(task)
+    }
+
+    override fun sendFCMNotif(model: RetrofitPostRequestModel ) {
+
+        App.instance.api_notification.postNotif(
+            RetrofitPostRequestModel(
+                to = model.to,
+                data = Data(
+                    action = model.data.action,
+                    message = model.data.message
+                )
+            )
+        ).enqueue(object : Callback<RetrofitPostRequestModel> {
+            override fun onFailure(call: Call<RetrofitPostRequestModel>, t: Throwable) {
+                Log.d("Notif", " OOPS!!!!!")
+            }
+
+            override fun onResponse(
+                call: Call<RetrofitPostRequestModel>,
+                response: Response<RetrofitPostRequestModel>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("Notif", "onResponse: YEAH !!!!")
+                }
+            }
+        }
+        )
     }
 }

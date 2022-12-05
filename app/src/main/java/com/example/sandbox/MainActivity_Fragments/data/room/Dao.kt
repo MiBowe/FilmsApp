@@ -10,7 +10,7 @@ interface Dao {
     @Insert
     fun insert(publisherEntity: FilmItem?)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilms(films: List<FilmItem>)
 
     @Delete

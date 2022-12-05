@@ -40,7 +40,7 @@ class FilmsPagingSource(
             LoadResult.Page(
             data = films,
             prevKey = if (page == 1) null else page - 1,
-            nextKey = if(page<20 || films.size==20){ page + 1 }
+            nextKey = if(page<5 || films.size==20){ page + 1 }
             else
             {null}
             )

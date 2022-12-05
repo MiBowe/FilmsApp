@@ -1,12 +1,11 @@
 package com.example.sandbox.MainActivity_Fragments.data.api
 
 import androidx.annotation.IntRange
+import com.example.sandbox.MainActivity_Fragments.data.api.PostRequest.RetrofitPostRequestModel
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.FilmListResponse
 import com.example.sandbox.MainActivity_Fragments.presentation.Adapter.KinopoiskFilmItem
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface Api {
 
@@ -19,4 +18,8 @@ interface Api {
     fun getMovieDetails(
         @Path("id") id: Int
     ): Call<KinopoiskFilmItem>
+
+    @POST("fcm/send")
+    fun postNotif(@Body requestModel: RetrofitPostRequestModel):
+            Call<RetrofitPostRequestModel>
 }

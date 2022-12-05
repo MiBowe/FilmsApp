@@ -1,11 +1,13 @@
 package com.example.sandbox.MainActivity_Fragments.presentation.Adapter
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "films", primaryKeys = ["id", "idDB"])
+@Entity(tableName = "films")
 data class FilmItem(
     val poster: String?,
     val posterToolbar: String?,
+    @PrimaryKey
     val id: Int,
     val title: String?,
     val subtitle: String?,

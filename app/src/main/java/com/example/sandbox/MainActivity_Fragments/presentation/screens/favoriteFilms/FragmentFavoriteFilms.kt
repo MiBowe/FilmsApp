@@ -58,7 +58,7 @@ class FragmentFavoriteFilms : Fragment(), Adapter.Listener {
         bundle.putInt("film", filmItem.id)
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem), "details_fragment")
+            .replace(R.id.frame_main, DetailsFragment.NewInstance(filmItem.id), "details_fragment")
             .addToBackStack("pop_stack")
             .commit()
     }

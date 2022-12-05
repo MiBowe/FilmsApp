@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:background="@color/black_50"
-
             app:collapsedTitleTextColor="@color/black"
             app:contentScrim="@color/orange_50"
             app:expandedTitleTextColor="@color/invis"
@@ -30,7 +29,7 @@
                 android:layout_gravity="right"
                 android:adjustViewBounds="true"
                 app:layout_collapseMode="parallax"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_heart_outline" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -39,7 +38,15 @@
                 app:layout_collapseMode="pin"
                 app:subtitleTextColor="@color/white"
                 app:titleTextColor="@color/white" />
+
+            <Button
+                android:id="@+id/set_alarm_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Напомнить позже" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -50,7 +57,6 @@
         app:layout_anchor="@+id/scroll"
         app:layout_anchorGravity="center"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
         <TextView
             android:id="@+id/title_detail"
